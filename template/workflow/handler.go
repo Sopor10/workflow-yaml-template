@@ -50,12 +50,12 @@ func handle(req []byte) []byte {
 	for i, step := range workflow.Workflow.Steps {
 		st := time.Now()
 		result, statusCode, resErr := runStep(step, workflow.Workflow.GatewayURL, &previousInput)
-		// log.Printf("[%d] %s %d byte(s) HTTP: %d - %fs\n",
-		// 	i,
-		// 	step.Name,
-		// 	len(result),
-		// 	statusCode,
-		// 	time.Since(st).Seconds())
+		log.Printf("[%d] %s %d byte(s) HTTP: %d - %fs\n",
+			i,
+			step.Name,
+			len(result),
+			statusCode,
+			time.Since(st).Seconds())
 
 		if resErr != nil {
 			return []byte(resErr.Error())
