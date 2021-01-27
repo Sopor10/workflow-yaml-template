@@ -3,11 +3,9 @@ package main
 import (
 	"bytes"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
 	"path"
-	"time"
 
 	yaml "gopkg.in/yaml.v2"
 )
@@ -47,15 +45,15 @@ func handle(req []byte) []byte {
 	}
 
 	previousInput := req
-	for i, step := range workflow.Workflow.Steps {
-		st := time.Now()
-		result, statusCode, resErr := runStep(step, workflow.Workflow.GatewayURL, &previousInput)
-		log.Printf("[%d] %s %d byte(s) HTTP: %d - %fs\n",
-			i,
-			step.Name,
-			len(result),
-			statusCode,
-			time.Since(st).Seconds())
+	for _, step := range workflow.Workflow.Steps {
+		// st := time.Now()
+		result, _, resErr := runStep(step, workflow.Workflow.GatewayURL, &previousInput)
+		// log.Printf("[%d] %s %d byte(s) HTTP: %d - %fs\n",
+		// 	i,
+		// 	step.Name,
+		// 	len(result),
+		// 	statusCode,
+		// 	time.Since(st).Seconds())
 
 		if resErr != nil {
 			return []byte(resErr.Error())
